@@ -1,3 +1,5 @@
+--Таблица employees. Создать таблицу employees (- id. serial,  primary key, - employee_name. Varchar(50), not null).
+
 create table employers (
 	id serial primary key,
 	employer_name varchar(50) not null
@@ -5,9 +7,8 @@ create table employers (
 
 select * from epmloyers;
 
---drop table employers; 
 
---��������� ������� employee 70 ��������.
+--Наполнить таблицу employee 70 строками.
 insert into employers(employer_name)
 	values('name1'),
 		('name2'),
@@ -83,13 +84,13 @@ insert into employers(employer_name)
 select * from employers;	
 
 	
---������� ������� salary
+--Создать таблицу salary (- id. Serial  primary key, - monthly_salary. Int, not null)
 create table salary_1(
 	id serial primary key,
 	monthly_salary int not null
 	);
 
---��������� ������� salary 15 ��������:
+--Наполнить таблицу salary 15 строками:
 insert into salary_1(monthly_salary)
 	values(1000),
 		(1100),
@@ -110,9 +111,8 @@ insert into salary_1(monthly_salary)
 	
 select * from salary_1;
 
---drop table employer_salary;
 
---������� ������� employee_salary
+--Создать таблицу employee_salary (- id. Serial  primary key, - employee_id. Int, not null, unique - salary_id. Int, not null)
 create table employer_salary(
 	id serial primary key,
 	employer_id int not null unique,
@@ -121,8 +121,7 @@ create table employer_salary(
 
 select * from employer_salary;
 
---��������� ������� employer_salary 40 ��������:(� 10 ����� �� 40 �������� �������������� employer_id)
-
+--Наполнить таблицу employee_salary 40 строками: - в 10 строк из 40 вставить несуществующие employee_id
 insert into employer_salary (employer_id, salary_id)
 	values(1, 2),
 		(2, 4),
@@ -169,6 +168,7 @@ insert into employer_salary (employer_id, salary_id)
 select * from employer_salary;
 
 
+--Создать таблицу roles (- id. Serial  primary key, - role_name. int, not null, unique)
 create table roles_1(
 	id serial primary key,
 	role_name int unique not null
@@ -176,11 +176,11 @@ create table roles_1(
 
 select * from roles_1;
 
-
+--Поменять тип столба role_name с int на varchar(30)
 alter table roles_1
 alter column role_name type varchar(30);
 
-
+--Наполнить таблицу roles 20 строками:
 insert into roles_1 (role_name)
 	values('Junior Python developer'),
 		('Middle Python developer'),
@@ -205,19 +205,22 @@ insert into roles_1 (role_name)
 
 select * from roles_1;
 
-
+--Создать таблицу roles_employee (- id. Serial  primary key, - employee_id. Int, not null, unique (внешний ключ для таблицы employees, поле id) 
+--- role_id. Int, not null (внешний ключ для таблицы roles, поле id)
 create table roles_employer(
 	id serial primary key,
 	employer_id int not null unique,
 	role_id int not null,
 	foreign key (employer_id)
-		references employers (id),
+		references employers(id),
 	foreign key (role_id)
-		references roles_1 (id)
+		references roles_1(id)
 );
+
 
 select * from roles_employer;
 
+--Наполнить таблицу roles_employee 40 строками:
 insert into roles_employer(employer_id, role_id)
 values(1, 2),
 	(2, 4),
@@ -264,6 +267,3 @@ values(1, 2),
 	(40, 6);
 	
 select * from roles_employer;
-
---drop table employer_salary; 
-
